@@ -1,8 +1,14 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const path = require("path");
 
 module.exports = {
-    entry: './index.js',
+    devServer: {
+        port: 3001,
+    },
+    output: {
+        publicPath: "http://localhost:3001/",
+    },
     module: {
         rules: [
             {
@@ -12,24 +18,21 @@ module.exports = {
             }
         ]
     },
-    devServer: {
-        contentBase: './dist',
-    },
     plugins: [
-        // new ModuleFederationPlugin({
-        //   name: "app_one_remote",
-        //   remotes: {
-        //     app_two: "app_two_remote",
-        //     app_three: "app_three_remote"
-        //   },
-        //   exposes: {
-        //     'AppContainer':'./src/App'
-        //   },
-        //   shared: ["react", "react-dom","react-router-dom"]
-        // }),
+        new ModuleFederationPlugin({
+            name: "app_container",
+            filename: "remoteEntry.js",
+            exposes: {
+                './App': "./src/App"
+            },
+            remotes: {
+                images_remote: "images_remote"
+            },
+            shared: { react: { singleton: true }, "react-dom": { singleton: true } }
+        }),
         new HtmlWebpackPlugin({
-            template: "./public/index.html",
-            chunks: ["main"]
+            template: "./public/index.html"
         })
+
     ]
 }
