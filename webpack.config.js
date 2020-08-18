@@ -3,6 +3,7 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const path = require("path");
 
 module.exports = {
+    mode: "development",
     devServer: {
         port: 3001,
     },
@@ -21,18 +22,13 @@ module.exports = {
     plugins: [
         new ModuleFederationPlugin({
             name: "app_container",
-            filename: "remoteEntry.js",
-            exposes: {
-                './App': "./src/App"
-            },
             remotes: {
-                images_remote: "images_remote"
+                images_remote: "images_remote@http://localhost:3002/remoteEntry.js"
             },
             shared: { react: { singleton: true }, "react-dom": { singleton: true } }
         }),
         new HtmlWebpackPlugin({
             template: "./public/index.html"
         })
-
     ]
 }

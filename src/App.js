@@ -1,11 +1,10 @@
 import React from 'react';
-const Images = React.lazy(() => import("images_remote/App"));
+import Images from 'images_remote/App';
 
 const App = () => (
     <div>
-        <React.Suspense fallback="Loading Images">
-            <Images />
-        </React.Suspense>
+        <h1>Search for images</h1>
+        <Images />
     </div>
 )
 
