@@ -16,6 +16,10 @@ module.exports = {
                 test: /\.jsx?$/,
                 loader: "babel-loader",
                 exclude: /node_modules/
+            },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
             }
         ]
     },
@@ -23,7 +27,8 @@ module.exports = {
         new ModuleFederationPlugin({
             name: "app_container",
             remotes: {
-                images_remote: "images_remote@http://localhost:3002/remoteEntry.js"
+                images_remote: "images_remote@http://localhost:3002/remoteEntry.js",
+                videos_remote: "videos_remote@http://localhost:3003/remoteEntry.js"
             },
             shared: { react: { singleton: true }, "react-dom": { singleton: true } }
         }),
