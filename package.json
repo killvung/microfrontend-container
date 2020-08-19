@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Container for my micro frontend",
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server",
     "build": "webpack --mode production"
   },
   "author": "",
